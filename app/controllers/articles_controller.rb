@@ -4,6 +4,7 @@ before_action :set_article, only: [:edit, :update, :show, :destroy]
 
  def index
   @articles = Article.all
+   @articles = Article.paginate(page: params[:page], per_page: 3)
  end
  def new
   @article = Article.new
@@ -34,16 +35,16 @@ before_action :set_article, only: [:edit, :update, :show, :destroy]
    render 'edit'
   end
   def destroy
-  @article.destroy
-  flash[:notice] = "Article was deleted"
-  redirect_to articles_path
- end
+   @article.destroy 
+   flash[:notice] = "Article was deleted"
+   redirect_to articles_path
+  end
  end
  private
   def set_article
    @article = Article.find(params[:id])
   end
   def article_params
-   params.require(:article).permit(:title, :description)
+   params.require(:article).permit(:title, :description, :image, :video, :thumbnail, :file)
   end
 end
