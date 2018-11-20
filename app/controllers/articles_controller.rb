@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
  #http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
+ #http_basic_authenticate_with name: "dhh", password: "secret", only: :destroy
 before_action :set_article, only: [:edit, :update, :show, :destroy]
 
  def index
@@ -34,12 +35,13 @@ before_action :set_article, only: [:edit, :update, :show, :destroy]
    flash[:notice] = "Article was not updated"
    render 'edit'
   end
+ end
   def destroy
    @article.destroy 
    flash[:notice] = "Article was deleted"
    redirect_to articles_path
   end
- end
+ 
  private
   def set_article
    @article = Article.find(params[:id])
